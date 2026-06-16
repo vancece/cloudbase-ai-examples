@@ -9,7 +9,7 @@ const OpenAI = require("openai");
 // ====== 配置区域（替换为你的实际值）======
 const ENV_ID = "your-env-id";
 const API_KEY = "your-api-key";
-const MODEL = "deepseek-v4-flash";
+const MODEL = "hy3-preview";
 // =========================================
 
 const client = new OpenAI({
