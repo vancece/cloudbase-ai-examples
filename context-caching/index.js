@@ -86,3 +86,32 @@ async function main() {
 }
 
 main().catch(console.error);
+
+/**
+ * 预期输出：
+ *
+ * === CloudBase AI 上下文缓存示例 ===
+ *
+ * --- 第 1 次请求（写入缓存）---
+ * 回答: 根据《中华人民共和国民法典》第七百一十四条，租赁期限届满，承租人应当返还租赁物...
+ * Token 用量: {
+ *   "input_tokens": 52,
+ *   "output_tokens": 280,
+ *   "cache_creation_input_tokens": 186,
+ *   "cache_read_input_tokens": 0
+ * }
+ *
+ * --- 第 2 次请求（命中缓存）---
+ * 回答: 根据《中华人民共和国消费者权益保护法》第二十四条，经营者提供的商品不符合质量要求...
+ * Token 用量: {
+ *   "input_tokens": 48,
+ *   "output_tokens": 310,
+ *   "cache_creation_input_tokens": 0,
+ *   "cache_read_input_tokens": 186
+ * }
+ *
+ * --- 缓存效果对比 ---
+ * 第 1 次 cache_creation_input_tokens: 186
+ * 第 2 次 cache_read_input_tokens: 186
+ * ✅ 缓存命中！第 2 次请求的 system prompt 费用仅为正常价格的 10%
+ */
