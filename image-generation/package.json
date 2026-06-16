@@ -1,0 +1,12 @@
+{
+  "name": "cloudbase-ai-image-generation",
+  "version": "1.0.0",
+  "description": "CloudBase AI 图片生成示例 - 使用混元生图模型",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2"
+  }
+}
