@@ -21,11 +21,11 @@ cd multi-turn
 npm install
 ```
 
-2. 配置环境变量：
+2. 打开 `index.js`，修改顶部的配置：
 
-```bash
-cp .env.example .env
-# 编辑 .env，填入你的 ENV_ID 和 API_KEY
+```js
+const ENV_ID = "your-env-id"; // 替换为你的云开发环境 ID
+const API_KEY = "your-api-key"; // 替换为你的 AI API Key
 ```
 
 3. 运行示例：
@@ -36,7 +36,7 @@ node index.js
 
 ## 在线体验
 
-点击下方链接在 CodeSandbox 中直接运行：
+点击下方链接在 CodeSandbox 中直接运行（需修改 index.js 中的配置）：
 
 - [多轮对话](https://codesandbox.io/p/github/vancece/cloudbase-ai-examples/main?file=/multi-turn/index.js)
 - [流式输出](https://codesandbox.io/p/github/vancece/cloudbase-ai-examples/main?file=/streaming/index.js)
@@ -44,9 +44,7 @@ node index.js
 - [上下文缓存](https://codesandbox.io/p/github/vancece/cloudbase-ai-examples/main?file=/context-caching/index.js)
 - [工具调用](https://codesandbox.io/p/github/vancece/cloudbase-ai-examples/main?file=/tool-calling/index.js)
 
-## 配置说明
-
-所有示例都需要以下配置：
+## 配置获取
 
 | 变量 | 说明 | 获取方式 |
 |------|------|---------|

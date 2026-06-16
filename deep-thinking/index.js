@@ -4,12 +4,16 @@
  * 演示推理模型（deepseek-r1）的深度思考能力。
  * 模型会先输出思考过程（reasoning_content），再给出最终回答（content）。
  */
-require("dotenv").config();
 const OpenAI = require("openai");
 
+// ====== 配置区域（替换为你的实际值）======
+const ENV_ID = "your-env-id"; // 云开发环境 ID
+const API_KEY = "your-api-key"; // AI API Key
+// =========================================
+
 const client = new OpenAI({
-  apiKey: process.env.API_KEY,
-  baseURL: `https://${process.env.ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
+  apiKey: API_KEY,
+  baseURL: `https://${ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
 });
 
 // 非流式调用

@@ -4,12 +4,16 @@
  * 演示如何维护消息历史实现多轮对话。
  * 大模型 API 是无状态的，每次请求需要携带完整的历史消息。
  */
-require("dotenv").config();
 const OpenAI = require("openai");
 
+// ====== 配置区域（替换为你的实际值）======
+const ENV_ID = "your-env-id"; // 云开发环境 ID
+const API_KEY = "your-api-key"; // AI API Key
+// =========================================
+
 const client = new OpenAI({
-  apiKey: process.env.API_KEY,
-  baseURL: `https://${process.env.ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
+  apiKey: API_KEY,
+  baseURL: `https://${ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
 });
 
 // 维护消息历史

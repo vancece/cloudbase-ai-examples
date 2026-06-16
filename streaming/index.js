@@ -4,12 +4,16 @@
  * 演示如何使用 SSE 流式返回，逐字输出模型生成内容。
  * 流式输出可以大幅降低用户等待时间，提升交互体验。
  */
-require("dotenv").config();
 const OpenAI = require("openai");
 
+// ====== 配置区域（替换为你的实际值）======
+const ENV_ID = "your-env-id"; // 云开发环境 ID
+const API_KEY = "your-api-key"; // AI API Key
+// =========================================
+
 const client = new OpenAI({
-  apiKey: process.env.API_KEY,
-  baseURL: `https://${process.env.ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
+  apiKey: API_KEY,
+  baseURL: `https://${ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
 });
 
 async function main() {

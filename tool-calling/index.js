@@ -4,12 +4,16 @@
  * 演示 Function Calling 能力，让大模型调用自定义函数获取外部信息。
  * 完整流程：用户提问 → 模型决定调用工具 → 执行工具函数 → 模型生成最终回答。
  */
-require("dotenv").config();
 const OpenAI = require("openai");
 
+// ====== 配置区域（替换为你的实际值）======
+const ENV_ID = "your-env-id"; // 云开发环境 ID
+const API_KEY = "your-api-key"; // AI API Key
+// =========================================
+
 const client = new OpenAI({
-  apiKey: process.env.API_KEY,
-  baseURL: `https://${process.env.ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
+  apiKey: API_KEY,
+  baseURL: `https://${ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
 });
 
 // 定义工具：模拟天气查询
