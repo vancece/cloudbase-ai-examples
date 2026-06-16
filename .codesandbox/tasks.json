@@ -3,33 +3,68 @@
   "setupTasks": [
     {
       "name": "Install Dependencies",
-      "command": "cd multi-turn && npm install && cd ../streaming && npm install && cd ../deep-thinking && npm install && cd ../context-caching && npm install && cd ../tool-calling && npm install"
+      "command": "cd multi-turn && npm install && cd ../streaming && npm install && cd ../deep-thinking && npm install && cd ../context-caching && npm install && cd ../tool-calling && npm install && cd ../nodejs-sdk && npm install && cd ../openai-sdk && npm install && cd ../anthropic-sdk && npm install"
     }
   ],
   "tasks": {
+    "nodejs-sdk": {
+      "name": "Node SDK 示例",
+      "command": "cd nodejs-sdk && node index.js",
+      "runAtStart": false
+    },
+    "openai-sdk": {
+      "name": "OpenAI SDK 示例",
+      "command": "cd openai-sdk && node index.js",
+      "runAtStart": false
+    },
+    "anthropic-sdk": {
+      "name": "Anthropic SDK 示例",
+      "command": "cd anthropic-sdk && node index.js",
+      "runAtStart": false
+    },
     "multi-turn": {
-      "name": "运行：多轮对话",
+      "name": "多轮对话（OpenAI SDK）",
       "command": "cd multi-turn && node index.js",
       "runAtStart": false
     },
+    "multi-turn-cloudbase": {
+      "name": "多轮对话（CloudBase SDK）",
+      "command": "cd multi-turn && node cloudbase-sdk.js",
+      "runAtStart": false
+    },
     "streaming": {
-      "name": "运行：流式输出",
+      "name": "流式输出（OpenAI SDK）",
       "command": "cd streaming && node index.js",
       "runAtStart": false
     },
+    "streaming-cloudbase": {
+      "name": "流式输出（CloudBase SDK）",
+      "command": "cd streaming && node cloudbase-sdk.js",
+      "runAtStart": false
+    },
     "deep-thinking": {
-      "name": "运行：深度思考",
+      "name": "深度思考（OpenAI SDK）",
       "command": "cd deep-thinking && node index.js",
       "runAtStart": false
     },
+    "deep-thinking-cloudbase": {
+      "name": "深度思考（CloudBase SDK）",
+      "command": "cd deep-thinking && node cloudbase-sdk.js",
+      "runAtStart": false
+    },
     "context-caching": {
-      "name": "运行：上下文缓存",
+      "name": "上下文缓存（Anthropic API）",
       "command": "cd context-caching && node index.js",
       "runAtStart": false
     },
     "tool-calling": {
-      "name": "运行：工具调用",
+      "name": "工具调用（OpenAI SDK）",
       "command": "cd tool-calling && node index.js",
+      "runAtStart": false
+    },
+    "tool-calling-cloudbase": {
+      "name": "工具调用（CloudBase SDK）",
+      "command": "cd tool-calling && node cloudbase-sdk.js",
       "runAtStart": false
     }
   }

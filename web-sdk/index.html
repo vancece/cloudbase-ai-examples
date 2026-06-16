@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudBase AI - Web SDK 示例</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+    h1 { margin-bottom: 20px; color: #333; }
+    .config { background: #fff; padding: 16px; border-radius: 8px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .config label { display: block; margin-bottom: 8px; font-size: 14px; color: #666; }
+    .config input { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; margin-bottom: 12px; }
+    .chat-box { background: #fff; border-radius: 8px; padding: 16px; min-height: 300px; max-height: 500px; overflow-y: auto; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .message { margin-bottom: 12px; padding: 10px 14px; border-radius: 8px; line-height: 1.6; white-space: pre-wrap; }
+    .message.user { background: #e3f2fd; text-align: right; }
+    .message.assistant { background: #f5f5f5; }
+    .input-area { display: flex; gap: 8px; }
+    .input-area input { flex: 1; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+    .input-area button { padding: 10px 20px; background: #1976d2; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .input-area button:hover { background: #1565c0; }
+    .input-area button:disabled { background: #ccc; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <h1>CloudBase AI - Web SDK 示例</h1>
+
+  <div class="config">
+    <label>环境 ID</label>
+    <input type="text" id="envId" placeholder="your-env-id" />
+    <label>Publishable Key（<a href="https://tcb.cloud.tencent.com/dev#/env/apikey" target="_blank">获取</a>）</label>
+    <input type="text" id="accessKey" placeholder="your-publishable-key" />
+  </div>
+
+  <div class="chat-box" id="chatBox"></div>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="输入消息..." />
+    <button id="sendBtn" onclick="sendMessage()">发送</button>
+  </div>
+
+  <script src="https://unpkg.com/@cloudbase/js-sdk@latest/dist/cloudbase-js-sdk.js"></script>
+  <script>
+    /**
+     * CloudBase AI - Web SDK 调用示例
+     *
+     * 使用 @cloudbase/js-sdk 在浏览器中调用 CloudBase AI 大模型。
+     * 支持匿名登录 + 流式对话。
+     *
+     * 文档：https://docs.cloudbase.net/ai/model/web-access
+     */
+    let app = null;
+    let ai = null;
+    const messages = [];
+
+    async function initSDK() {
+      const envId = document.getElementById("envId").value.trim();
+      const accessKey = document.getElementById("accessKey").value.trim();
+
+      if (!envId || !accessKey) {
+        alert("请填写环境 ID 和 Publishable Key");
+        return false;
+      }
+
+      if (!app) {
+        app = cloudbase.default.init({ env: envId, accessKey });
+        const auth = app.auth();
+        await auth.signInAnonymously();
+        ai = app.ai();
+      }
+      return true;
+    }
+
+    async function sendMessage() {
+      if (!(await initSDK())) return;
+
+      const input = document.getElementById("userInput");
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      input.value = "";
+      document.getElementById("sendBtn").disabled = true;
+
+      // 显示用户消息
+      appendMessage("user", userText);
+      messages.push({ role: "user", content: userText });
+
+      // 创建 AI 回复气泡
+      const aiMsgEl = appendMessage("assistant", "");
+
+      try {
+        const model = ai.createModel("cloudbase");
+        const res = await model.streamText({
+          model: "hy3-preview",
+          messages,
+        });
+
+        let fullText = "";
+        for await (const text of res.textStream) {
+          fullText += text;
+          aiMsgEl.textContent = fullText;
+          // 自动滚动到底部
+          document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
+        }
+
+        messages.push({ role: "assistant", content: fullText });
+      } catch (error) {
+        aiMsgEl.textContent = "出错了: " + error.message;
+        aiMsgEl.style.color = "red";
+      }
+
+      document.getElementById("sendBtn").disabled = false;
+    }
+
+    function appendMessage(role, text) {
+      const chatBox = document.getElementById("chatBox");
+      const div = document.createElement("div");
+      div.className = `message ${role}`;
+      div.textContent = text;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return div;
+    }
+
+    // 回车发送
+    document.getElementById("userInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>

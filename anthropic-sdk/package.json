@@ -1,0 +1,8 @@
+{
+  "name": "cloudbase-ai-anthropic-sdk",
+  "description": "CloudBase AI - Anthropic SDK 兼容调用示例",
+  "private": true,
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0"
+  }
+}

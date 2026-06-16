@@ -1,0 +1,8 @@
+{
+  "name": "cloudbase-ai-wx-server-sdk",
+  "description": "CloudBase AI - wx-server-sdk 云函数调用示例",
+  "private": true,
+  "dependencies": {
+    "wx-server-sdk": "3.0.5-beta.1"
+  }
+}

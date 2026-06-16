@@ -1,0 +1,8 @@
+{
+  "name": "cloudbase-ai-nodejs-sdk",
+  "description": "CloudBase AI - Node SDK (@cloudbase/node-sdk) 调用示例",
+  "private": true,
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.18.0"
+  }
+}

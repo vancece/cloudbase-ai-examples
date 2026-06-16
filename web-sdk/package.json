@@ -1,0 +1,8 @@
+{
+  "name": "cloudbase-ai-web-sdk",
+  "description": "CloudBase AI - Web SDK (@cloudbase/js-sdk) 调用示例",
+  "private": true,
+  "dependencies": {
+    "@cloudbase/js-sdk": "^2.0.0"
+  }
+}

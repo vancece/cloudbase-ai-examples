@@ -1,0 +1,8 @@
+{
+  "name": "cloudbase-ai-openai-sdk",
+  "description": "CloudBase AI - OpenAI SDK 兼容调用示例",
+  "private": true,
+  "dependencies": {
+    "openai": "^4.0.0"
+  }
+}
