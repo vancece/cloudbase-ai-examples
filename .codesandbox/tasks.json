@@ -1,0 +1,36 @@
+{
+  "$schema": "https://codesandbox.io/docs/projects/schema/tasks.json",
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "cd multi-turn && npm install && cd ../streaming && npm install && cd ../deep-thinking && npm install && cd ../context-caching && npm install && cd ../tool-calling && npm install"
+    }
+  ],
+  "tasks": {
+    "multi-turn": {
+      "name": "运行：多轮对话",
+      "command": "cd multi-turn && node index.js",
+      "runAtStart": false
+    },
+    "streaming": {
+      "name": "运行：流式输出",
+      "command": "cd streaming && node index.js",
+      "runAtStart": false
+    },
+    "deep-thinking": {
+      "name": "运行：深度思考",
+      "command": "cd deep-thinking && node index.js",
+      "runAtStart": false
+    },
+    "context-caching": {
+      "name": "运行：上下文缓存",
+      "command": "cd context-caching && node index.js",
+      "runAtStart": false
+    },
+    "tool-calling": {
+      "name": "运行：工具调用",
+      "command": "cd tool-calling && node index.js",
+      "runAtStart": false
+    }
+  }
+}
