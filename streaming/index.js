@@ -1,0 +1,38 @@
+/**
+ * CloudBase AI - 流式输出示例
+ *
+ * 演示如何使用 SSE 流式返回，逐字输出模型生成内容。
+ * 流式输出可以大幅降低用户等待时间，提升交互体验。
+ */
+require("dotenv").config();
+const OpenAI = require("openai");
+
+const client = new OpenAI({
+  apiKey: process.env.API_KEY,
+  baseURL: `https://${process.env.ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`,
+});
+
+async function main() {
+  console.log("=== CloudBase AI 流式输出示例 ===\n");
+  console.log("AI: ");
+
+  const stream = await client.chat.completions.create({
+    model: "deepseek-v4-flash",
+    messages: [{ role: "user", content: "用 200 字介绍一下云计算的发展历程" }],
+    stream: true,
+  });
+
+  let fullContent = "";
+
+  for await (const chunk of stream) {
+    const content = chunk.choices[0]?.delta?.content || "";
+    fullContent += content;
+    // 逐字输出到终端
+    process.stdout.write(content);
+  }
+
+  console.log("\n\n--- 流式输出完成 ---");
+  console.log(`总字数: ${fullContent.length}`);
+}
+
+main().catch(console.error);

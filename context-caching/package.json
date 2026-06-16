@@ -1,0 +1,12 @@
+{
+  "name": "cloudbase-ai-context-caching",
+  "version": "1.0.0",
+  "description": "CloudBase AI 上下文缓存示例",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "cloudbase-ai-multi-turn",
+  "version": "1.0.0",
+  "description": "CloudBase AI 多轮对话示例",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "openai": "^4.0.0",
+    "dotenv": "^16.0.0"
+  }
+}
