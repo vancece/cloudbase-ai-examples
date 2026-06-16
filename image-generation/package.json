@@ -7,6 +7,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@cloudbase/node-sdk": "^2"
+    "@cloudbase/node-sdk": "^3.16.0"
   }
 }
