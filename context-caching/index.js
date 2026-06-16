@@ -8,13 +8,14 @@
  */
 
 // ====== 配置区域（替换为你的实际值）======
-const ENV_ID = "your-env-id"; // 云开发环境 ID
-const API_KEY = "your-api-key"; // AI API Key
+const ENV_ID = "your-env-id";
+const API_KEY = "your-api-key";
+const MODEL = "hy3-preview";
 // =========================================
 
 const BASE_URL = `https://${ENV_ID}.api.tcloudbasegateway.com/v1/ai/cloudbase`;
 
-// 模拟一个较长的 system prompt
+// 较长的 system prompt（实际使用时可放入数万字的参考资料）
 const LONG_SYSTEM_PROMPT = `你是一个专业的法律顾问。以下是你需要遵循的规则和参考资料：
 
 1. 回答问题时必须引用具体法条
@@ -37,7 +38,7 @@ async function sendMessage(userMessage) {
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify({
-      model: "hy3-preview",
+      model: MODEL,
       max_tokens: 1024,
       system: [
         {
@@ -54,34 +55,18 @@ async function sendMessage(userMessage) {
 }
 
 async function main() {
-  console.log("=== CloudBase AI 上下文缓存示例 ===\n");
-
   // 第 1 次请求：写入缓存
-  console.log("--- 第 1 次请求（写入缓存）---");
   const result1 = await sendMessage("租房合同到期房东不退押金怎么办？");
-  console.log("回答:", result1.content?.[0]?.text?.slice(0, 100) + "...");
-  console.log("Token 用量:", JSON.stringify(result1.usage, null, 2));
+  console.log("第 1 次请求 - Token 用量:", JSON.stringify(result1.usage, null, 2));
   console.log();
 
   // 第 2 次请求：命中缓存
-  console.log("--- 第 2 次请求（命中缓存）---");
   const result2 = await sendMessage("网购商品质量有问题如何维权？");
-  console.log("回答:", result2.content?.[0]?.text?.slice(0, 100) + "...");
-  console.log("Token 用量:", JSON.stringify(result2.usage, null, 2));
-  console.log();
+  console.log("第 2 次请求 - Token 用量:", JSON.stringify(result2.usage, null, 2));
 
-  // 对比缓存效果
-  if (result1.usage && result2.usage) {
-    console.log("--- 缓存效果对比 ---");
-    console.log(
-      `第 1 次 cache_creation_input_tokens: ${result1.usage.cache_creation_input_tokens || 0}`
-    );
-    console.log(
-      `第 2 次 cache_read_input_tokens: ${result2.usage.cache_read_input_tokens || 0}`
-    );
-    if (result2.usage.cache_read_input_tokens > 0) {
-      console.log("✅ 缓存命中！第 2 次请求的 system prompt 费用仅为正常价格的 10%");
-    }
+  // 对比
+  if (result2.usage?.cache_read_input_tokens > 0) {
+    console.log("\n✅ 缓存命中！system prompt 费用仅为正常价格的 10%");
   }
 }
 
@@ -90,28 +75,19 @@ main().catch(console.error);
 /**
  * 预期输出：
  *
- * === CloudBase AI 上下文缓存示例 ===
- *
- * --- 第 1 次请求（写入缓存）---
- * 回答: 根据《中华人民共和国民法典》第七百一十四条，租赁期限届满，承租人应当返还租赁物...
- * Token 用量: {
+ * 第 1 次请求 - Token 用量: {
  *   "input_tokens": 52,
  *   "output_tokens": 280,
  *   "cache_creation_input_tokens": 186,
  *   "cache_read_input_tokens": 0
  * }
  *
- * --- 第 2 次请求（命中缓存）---
- * 回答: 根据《中华人民共和国消费者权益保护法》第二十四条，经营者提供的商品不符合质量要求...
- * Token 用量: {
+ * 第 2 次请求 - Token 用量: {
  *   "input_tokens": 48,
  *   "output_tokens": 310,
  *   "cache_creation_input_tokens": 0,
  *   "cache_read_input_tokens": 186
  * }
  *
- * --- 缓存效果对比 ---
- * 第 1 次 cache_creation_input_tokens: 186
- * 第 2 次 cache_read_input_tokens: 186
- * ✅ 缓存命中！第 2 次请求的 system prompt 费用仅为正常价格的 10%
+ * ✅ 缓存命中！system prompt 费用仅为正常价格的 10%
  */
