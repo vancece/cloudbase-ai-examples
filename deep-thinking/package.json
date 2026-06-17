@@ -4,10 +4,14 @@
   "description": "CloudBase AI 深度思考示例",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:cloudbase": "node cloudbase-sdk.js",
+    "start:anthropic": "node anthropic-sdk.js",
+    "start:responses": "node responses-api.js"
   },
   "dependencies": {
     "openai": "^4.0.0",
-    "@cloudbase/node-sdk": "^3.0.0"
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@cloudbase/node-sdk": "^3.16.0"
   }
 }
