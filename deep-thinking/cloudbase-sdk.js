@@ -2,6 +2,7 @@
  * CloudBase AI - 深度思考示例（CloudBase SDK）
  *
  * 演示如何使用 @cloudbase/node-sdk 获取模型的思考过程（reasoning_content）。
+ * hy3-preview 默认不开启深度思考，需通过 reasoning_effort 参数开启。
  */
 const cloudbase = require("@cloudbase/node-sdk");
 
@@ -9,7 +10,7 @@ const cloudbase = require("@cloudbase/node-sdk");
 const ENV_ID = "your-env-id";
 const SECRET_ID = "your-secret-id"; // 腾讯云 API 密钥，https://console.cloud.tencent.com/cam/capi
 const SECRET_KEY = "your-secret-key";
-const MODEL = "hy3-preview"; // 支持深度思考的模型：hy3-preview、deepseek-r1
+const MODEL = "hy3-preview";
 // =========================================
 
 const app = cloudbase.init({
@@ -24,6 +25,7 @@ const model = ai.createModel("cloudbase");
 async function main() {
   const result = await model.generateText({
     model: MODEL,
+    reasoning_effort: "high", // 开启深度思考：low / medium / high
     messages: [{ role: "user", content: "证明 √2 是无理数" }],
   });
 

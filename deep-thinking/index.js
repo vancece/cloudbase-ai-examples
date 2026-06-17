@@ -1,7 +1,8 @@
 /**
- * CloudBase AI - 深度思考示例
+ * CloudBase AI - 深度思考示例（OpenAI SDK）
  *
- * 演示推理模型的深度思考能力。
+ * 演示如何通过 reasoning_effort 参数开启深度思考。
+ * hy3-preview 默认不开启深度思考，需传 reasoning_effort: "low" / "medium" / "high"。
  * 模型会先输出思考过程（reasoning_content），再给出最终回答（content）。
  */
 const OpenAI = require("openai");
@@ -9,7 +10,7 @@ const OpenAI = require("openai");
 // ====== 配置区域（替换为你的实际值）======
 const ENV_ID = "your-env-id";
 const API_KEY = "your-api-key";
-const MODEL = "hy3-preview"; // 支持深度思考的模型：hy3-preview、deepseek-r1
+const MODEL = "hy3-preview";
 // =========================================
 
 const client = new OpenAI({
@@ -22,6 +23,7 @@ async function main() {
   const completion = await client.chat.completions.create({
     model: MODEL,
     messages: [{ role: "user", content: "证明 √2 是无理数" }],
+    reasoning_effort: "high", // 开启深度思考：low / medium / high
   });
 
   const message = completion.choices[0].message;
